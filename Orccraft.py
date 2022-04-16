@@ -16,7 +16,7 @@ class User:
     strength: int
     agility: int
     intelligence: int
-    armor: str
+    armor: int
     arrows: int
 
 
@@ -32,18 +32,53 @@ class Storage:
         return unit_data_manager()
 
     def order_by(self):
-        order = int(input("Chose ordering:\n0. race\n1. class_\n2. hp\n4. mp\n5. strength\n"
-                          "6. agility\n7. intelligence\n8. armor\n9. arrows\n"))
+        order = int(input("Chose ordering:\n0. race\n1. class_\n2. hp\n3. mp\n4. strength\n"
+                          "5. agility\n6. intelligence\n7. armor\n8. arrows\n"))
         orders = ["race", "class_", "hp", "mp", "strength", "agility",
                   "intelligence", "armor", "arrows"]
-        print(*sorted(self.users, key=attrgetter(orders[order])))  # attrgetter/ lambda + getattr
+        print(*sorted(self.users, key=attrgetter(orders[order])), sep='\n')
         return unit_data_manager()
 
     def get_user_by_id(self):
-        pass
+        inp_id = int(input("Enter id: "))
+        for user in self.users:
+            if user.id_ == inp_id:
+                print(f"{user}\n")
+                return unit_data_manager()
 
     def get_user_by_field(self):
-        pass
+        inp_field = int(input("Choose field:\n0. race\n1. class_\n2. hp\n3. mp\n4. strength\n"
+                              "5. agility\n6. intelligence\n7. armor\n8. arrows\n"))
+        value = input("Enter value of field: ").capitalize()
+        for user in self.users:
+            if inp_field == 0:
+                if user.race == value:
+                    print(user)
+            elif inp_field == 1:
+                if user.class_ == value:
+                    print(user)
+            elif inp_field == 2:
+                if str(user.hp) == value:
+                    print(user)
+            elif inp_field == 3:
+                if str(user.mp) == value:
+                    print(user)
+            elif inp_field == 4:
+                if str(user.strength) == value:
+                    print(user)
+            elif inp_field == 5:
+                if str(user.agility) == value:
+                    print(user)
+            elif inp_field == 6:
+                if str(user.intelligence) == value:
+                    print(user)
+            elif inp_field == 7:
+                if str(user.armor) == value:
+                    print(user)
+            elif inp_field == 8:
+                if str(user.arrows) == value:
+                    print(user)
+        return unit_data_manager()
 
     # Select one mode to show user/users
     def show(self):
@@ -61,15 +96,15 @@ class Storage:
         try:
             id_ = counter
             counter += 1
-            race = input("Enter race (str): ")
-            class_ = input("Enter class(str): ")
+            race = input("Enter race (str): ").capitalize()
+            class_ = input("Enter class(str): ").capitalize()
             hp = int(input("Enter hp(digit): "))
             mp = int(input("Enter mp(digit): "))
             strength = int(input("Enter strength(digit): "))
             agility = int(input("Enter agility(digit): "))
             intelligence = int(input("Enter intelligence(digit): "))
-            armor = input("Enter armor(str): ")
-            arrows = int(input("Enter arrows(int): "))
+            armor = int(input("Enter armor(digit): "))
+            arrows = int(input("Enter arrows(digit): "))
 
             new_user = User(id_, race, class_, hp, mp, strength, agility, intelligence, armor, arrows)
             self.users.append(new_user)
