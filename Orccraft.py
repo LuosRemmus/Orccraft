@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from operator import attrgetter
 
-global counter
 counter: int = 0
 
 
@@ -99,12 +98,21 @@ class Storage:
             race = input("Enter race (str): ").capitalize()
             class_ = input("Enter class(str): ").capitalize()
             hp = int(input("Enter hp(digit): "))
-            mp = int(input("Enter mp(digit): "))
+            if class_.lower() == 'wizard':
+                mp = int(input("Enter mp(digit): "))
+            else:
+                mp = 0
             strength = int(input("Enter strength(digit): "))
             agility = int(input("Enter agility(digit): "))
             intelligence = int(input("Enter intelligence(digit): "))
-            armor = int(input("Enter armor(digit): "))
-            arrows = int(input("Enter arrows(digit): "))
+            if class_.lower() == 'warrior':
+                armor = int(input("Enter armor(digit): "))
+            else:
+                armor = 0
+            if class_.lower() == 'archer':
+                arrows = int(input("Enter arrows(digit): "))
+            else:
+                arrows = 0
 
             new_user = User(id_, race, class_, hp, mp, strength, agility, intelligence, armor, arrows)
             self.users.append(new_user)
@@ -116,11 +124,99 @@ class Storage:
 
     # Update user
     def update(self):
-        pass
+        user_id = int(input("Enter user id u want to update: "))
+        fields = []
+        fld = int(input("Enter field u want to update:\n0. race\n"
+                        "1. class_\n2. hp\n3. mp\n4. strength\n"
+                        "5. agility\n6. intelligence\n7. armor\n8. arrows\n9. Stop choosing fields\n"))
+        while True:
+            if fld != 9:
+                fields.append(fld)
+            else:
+                print("Choosing fields have been stopped")
+                break
+            fld = int(input())
+
+        for user in self.users:
+            if user_id == user.id_:
+                for f in fields:
+                    if f == 0:
+                        try:
+                            user.race = input("Enter new value for race: ")
+                            print("Updating was successful!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 1:
+                        try:
+                            user.class_ = input("Enter new value for class: ")
+                            print("Updating was successful!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 2:
+                        try:
+                            user.hp = int(input("Enter new value for hp: "))
+                            print("Updating was successful!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 3:
+                        try:
+                            if user.class_ == 'Wizard':
+                                user.mp = int(input("Enter new value for mp: "))
+                                print("Updating was successful!")
+                            else:
+                                print("This unit is not wizard!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 4:
+                        try:
+                            user.strength = int(input("Enter new value for strength: "))
+                            print("Updating was successful!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 5:
+                        try:
+                            user.agility = int(input("Enter new value for agility: "))
+                            print("Updating was successful!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 6:
+                        try:
+                            user.intelligence = int(input("Enter new value for intelligence: "))
+                            print("Updating was successful!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 7:
+                        try:
+                            if user.class_ == 'Warrior':
+                                user.armor = int(input("Enter new value for armor: "))
+                                print("Updating was successful!")
+                            else:
+                                print("This unit is not warrior!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                    elif f == 8:
+                        try:
+                            if user.class_ == 'Archer':
+                                user.arrows = int(input("Enter new value for arrows: "))
+                                print("Updating was successful!")
+                            else:
+                                print("This unit is not archer!")
+                        except Exception as e:
+                            print(f"Error, {e}")
+                return unit_data_manager()
 
     # Delete user
     def delete(self):
-        pass
+        user_id = int(input("Enter user id: "))
+        try:
+            for user in self.users:
+                if user.id_ == user_id:
+                    self.users.remove(user)
+                    break
+            print("Deletion was successful!")
+        except Exception as e:
+            print(f"Error: {e}")
+        return unit_data_manager()
 
     # Exit from program
     def exit(self):
