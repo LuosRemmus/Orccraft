@@ -235,3 +235,47 @@ def unit_data_manager():
 
 if __name__ == '__main__':
     unit_data_manager()
+
+"""
+1. Убери все переменные с глобального уровня. Не то, чтобы это прям плохо, но карму портит.
+2. Сделай валидацию входящей информации
+    - unit_data_manager - если вводить что то вне [1 - 5], программа вылетает
+    - в классе storage также надо сделать валидацию, чтобы программа сыграла в ящик раньше нужного
+3. Пересмотри концепцию класса User и попробуй сделать абстрактного пользователя от которого потом наследуются
+ конкретные классы (или как нибудь ещё). Лишние поля с собой каждому классу таскать не стоит.
+ Подсказка: вытаскивать нужные поля можно через getattr, а отлавливать ошибки - через try...except
+ 
+ Пример
+ 
+ 
+
+@dataclass
+class Transport:
+    mark: str
+    max_speed: float
+
+
+@dataclass
+class Plane(Transport):
+    max_height: int
+
+
+@dataclass
+class Truck(Transport):
+    volume: float
+
+
+storage = list[Transport]
+
+
+def filter_by_attribute(name: str, value, comparator):
+    for transport in storage:
+        try:
+            if comparator(value, getattr(transport, name)):
+                yield transport
+        except ValueError:
+            continue
+            
+4. Раздели классы по файлам. В одном файле всё держать тоже не круто
+   
+"""
