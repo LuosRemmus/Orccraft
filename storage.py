@@ -36,39 +36,19 @@ class Storage:
                 print(user)
         return unit_data_manager()
 
-    def get_warrior(self):
-        fld = int(input("Choose field:\n1. race\n2. class\n3. hp\n4. strength\n5. armor\n"))
-        fld_dct = {1: 'race', 2: 'class_', 3: 'hp', 4: 'strength', 5: 'armor'}
-        value = input("Enter value: ")
-        for user in self.users:
-            if user.__getattribute__(fld_dct[fld]) and str(user.__getattribute__(fld_dct[fld])) == value:
-                print(user)
-        return unit_data_manager()
-
-    def get_archer(self):
-        fld = int(input("Choose field:\n1. race\n2. class\n3. hp\n4. agility\n5. arrows\n"))
-        fld_dct = {1: 'race', 2: 'class_', 3: 'hp', 4: 'agility', 5: 'arrows'}
-        value = input("Enter value: ")
-        for user in self.users:
-            if getattr(user, fld_dct[fld]) and str(getattr(user, fld_dct[fld])) == value:
-                print(user)
-        return unit_data_manager()
-
-    def get_wizard(self):
-        fld = int(input("Choose field:\n1. race\n2. class\n3. hp\n4. intelligence\n5. mp\n"))
-        fld_dct = {1: 'race', 2: 'class_', 3: 'hp', 4: 'intelligence', 5: 'mp'}
-        value = input("Enter value: ")
-        for user in self.users:
-            if user.__getattribute__(fld_dct[fld]) and str(user.__getattribute__(fld_dct[fld])) == value:
-                print(user)
-        return unit_data_manager()
-
     def get_user_by_field(self):
-        user_class = int(input("Enter class:\n1. Warrior\n2. Archer\n3. Wizard\n"))
-        get_dct = {1: self.get_warrior, 2: self.get_archer, 3: self.get_wizard}
-        if 1 < user_class > 3:
-            return 0
-        return get_dct[user_class]()
+        fld = int(input("Choose field:\n1. race\n2. class\n3. hp\n4. mp\n5. strength\n"
+                        "6. agility\n7. intelligence\n8. armor\n9. arrows\n"))
+        fld_dct = {1: 'race', 2: 'class_', 3: 'hp', 4: 'mp', 5: 'strength',
+                   6: 'agility', 7: 'intelligence', 8: 'armor', 9: 'arrows'}
+        value = input("Enter value: ")
+        for user in self.users:
+            try:
+                if str(user.__getattribute__(fld_dct[fld])) == value:
+                    print(user)
+            except AttributeError:
+                continue
+        return unit_data_manager()
 
     # Select one mode to show user/users
     def show(self):
