@@ -121,11 +121,9 @@ class Storage:
         fld = int(input("Enter field u want to update:\n0. race\n"
                         "1. class_\n2. hp\n3. mp\n4. strength\n"
                         "5. agility\n6. intelligence\n7. armor\n8. arrows\n9. Stop choosing fields\n"))
-        fld_dct = {1: "class_", 2: "hp", 3: "mp", 4: "strength", 5: "agility", 6: "intelligence", 7: "armor",
-                   8: "arrows"}
         while True:
             if 0 < fld < 9:
-                fields.append(fld_dct[fld])
+                fields.append(fld)
             else:
                 print("Choosing fields have been stopped")
                 break
